@@ -6,6 +6,7 @@ import (
 	"log"
 	"os"
 	"os/signal"
+	"syscall"
 
 	"github.com/goburrow/serial"
 )
@@ -13,10 +14,7 @@ import (
 func read(s serial.Port) {
 	for {
 		buf := make([]byte, 128)
-		n, err := s.Read(buf)
-		if err != nil {
-			//log.Fatal(err)
-		}
+		n, _ := s.Read(buf)
 		fmt.Fprintf(os.Stdout, "%s", buf[:n])
 	}
 }
@@ -25,22 +23,22 @@ func write(s serial.Port) {
 	for {
 		reader := bufio.NewReader(os.Stdin)
 		text, _ := reader.ReadString('\n')
-		_, err := s.Write([]byte(text))
-		if err != nil {
-			//log.Fatal(err)
-		}
+		s.Write([]byte(text))
 	}
 }
 
 func sigh(s serial.Port) {
 	sigchan := make(chan os.Signal, 1)
-	signal.Notify(sigchan, os.Interrupt)
-	for sig := range sigchan {
-		switch sig {
-		case os.Interrupt:
-			// TODO(fntlnz): I don't know how to send signals to the tty atm, blame on me
-			break
+	signal.Notify(sigchan)
 
+	ascii := map[os.Signal]string{
+		syscall.SIGINT:  "\x03",
+		syscall.SIGTSTP: "\x1A",
+	}
+
+	for sig := range sigchan {
+		if val, ok := ascii[sig]; ok {
+			s.Write([]byte(val))
 		}
 	}
 }
@@ -56,5 +54,4 @@ func main() {
 	go read(s)
 	go write(s)
 	sigh(s)
-
 }

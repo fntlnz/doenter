@@ -1,0 +1,11 @@
+{
+	"ImportPath": "github.com/fntlnz/doenter",
+	"GoVersion": "go1.6",
+	"GodepVersion": "v74",
+	"Deps": [
+		{
+			"ImportPath": "github.com/goburrow/serial",
+			"Rev": "1b57be761cd3a66492333e9367a23c0869f9cc2e"
+		}
+	]
+}
