@@ -12,7 +12,38 @@ A shell inside that Virtual Machine is useful because:
 
 # Installation
 
-# Demo
+## Requirements
+
+- A working and running [Docker for Mac](https://docs.docker.com/engine/installation/mac/)
+
+```
+curl -L https://github.com/fntlnz/doenter/releases/download/0.1.0/doenter > /usr/local/bin/doenter
+chmod +x /usr/local/bin/doenter
+```
+
+# Usage
+
+Once installed, `doenter` is ready to be used.
+
+Just run `doenter` in your terminal and you will be in the virtual machine's shell.
+
+*IMPORTANT*: you will be asked for username and password. Username is `root` and password is empty.
+
+```
+Welcome to Moby alpha
+Kernel 4.4.13-moby on an x86_64 (/dev/ttyS0)
+
+                        ##         .
+                  ## ## ##        ==
+               ## ## ## ## ##    ===
+           /"""""""""""""""""___/ ===
+      ~~~ {~~ ~~~~ ~~~ ~~~~ ~~~ ~ /  ===- ~~~
+           \______ o           __/
+             \    \         __/
+              \____\_______/
+
+moby login:
+```
 
 # Plans
 
