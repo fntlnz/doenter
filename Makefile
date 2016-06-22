@@ -23,6 +23,7 @@ format:
 	@gofmt -s -w .
 
 clean:
+	@docker rmi doenter-build
 	@rm $(APP)
 
 .PHONY: all build build-app build-container format clean
