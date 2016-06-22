@@ -46,7 +46,7 @@ func sigh(s *serial.Port) {
 }
 
 func main() {
-	c := &serial.Config{Name: "/dev/ttys001", Baud: 9600}
+	c := &serial.Config{Name: "/dev/ttys000", Baud: 9600}
 	s, err := serial.OpenPort(c)
 	if err != nil {
 		log.Fatal(err)
