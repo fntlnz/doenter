@@ -7,10 +7,10 @@ import (
 	"os"
 	"os/signal"
 
-	"github.com/tarm/serial"
+	"github.com/goburrow/serial"
 )
 
-func read(s *serial.Port) {
+func read(s serial.Port) {
 	for {
 		buf := make([]byte, 128)
 		n, err := s.Read(buf)
@@ -21,7 +21,7 @@ func read(s *serial.Port) {
 	}
 }
 
-func write(s *serial.Port) {
+func write(s serial.Port) {
 	for {
 		reader := bufio.NewReader(os.Stdin)
 		text, _ := reader.ReadString('\n')
@@ -32,7 +32,7 @@ func write(s *serial.Port) {
 	}
 }
 
-func sigh(s *serial.Port) {
+func sigh(s serial.Port) {
 	sigchan := make(chan os.Signal, 1)
 	signal.Notify(sigchan, os.Interrupt)
 	for sig := range sigchan {
@@ -46,11 +46,12 @@ func sigh(s *serial.Port) {
 }
 
 func main() {
-	c := &serial.Config{Name: "/dev/ttys000", Baud: 9600}
-	s, err := serial.OpenPort(c)
+	c := &serial.Config{Address: "/dev/ttys000", BaudRate: 9600}
+	s, err := serial.Open(c)
 	if err != nil {
 		log.Fatal(err)
 	}
+	defer s.Close()
 
 	go read(s)
 	go write(s)
