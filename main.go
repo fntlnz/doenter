@@ -9,6 +9,7 @@ import (
 	"syscall"
 
 	"github.com/goburrow/serial"
+	"github.com/mitchellh/go-homedir"
 )
 
 func read(s serial.Port) {
@@ -44,7 +45,15 @@ func sigh(s serial.Port) {
 }
 
 func main() {
-	c := &serial.Config{Address: "/dev/ttys000", BaudRate: 9600}
+	addr, err := homedir.Expand("~/Library/Containers/com.docker.docker/Data/com.docker.driver.amd64-linux/tty")
+	if err != nil {
+		log.Fatal(err)
+	}
+
+	c := &serial.Config{
+		Address:  addr,
+		BaudRate: 9600,
+	}
 	s, err := serial.Open(c)
 	if err != nil {
 		log.Fatal(err)
