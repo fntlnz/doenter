@@ -2,7 +2,7 @@ package main
 
 import (
 	"bufio"
-	"fmt"
+	"io"
 	"log"
 	"os"
 	"os/signal"
@@ -14,9 +14,7 @@ import (
 
 func read(s serial.Port) {
 	for {
-		buf := make([]byte, 128)
-		n, _ := s.Read(buf)
-		fmt.Fprintf(os.Stdout, "%s", buf[:n])
+		io.Copy(os.Stdout, s)
 	}
 }
 
