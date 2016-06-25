@@ -17,7 +17,7 @@ A shell inside that Virtual Machine is useful because:
 - A working and running [Docker for Mac](https://docs.docker.com/engine/installation/mac/)
 
 ```
-curl -L https://github.com/fntlnz/doenter/releases/download/0.1.0/doenter > /usr/local/bin/doenter
+curl -L https://github.com/fntlnz/doenter/releases/download/0.1.1/doenter > /usr/local/bin/doenter
 chmod +x /usr/local/bin/doenter
 ```
 
