@@ -2,11 +2,13 @@ package main
 
 import (
 	"bufio"
+	"fmt"
 	"io"
 	"log"
 	"os"
 	"os/signal"
 	"syscall"
+	"time"
 
 	"github.com/goburrow/serial"
 	"github.com/mitchellh/go-homedir"
@@ -26,6 +28,7 @@ func write(s serial.Port) {
 	}
 }
 
+// This functions handles signals to the main process and routes them to the VM
 func sigh(s serial.Port) {
 	sigchan := make(chan os.Signal, 1)
 	signal.Notify(sigchan)
@@ -39,6 +42,28 @@ func sigh(s serial.Port) {
 		if val, ok := ascii[sig]; ok {
 			s.Write([]byte(val))
 		}
+	}
+}
+
+// This function allows the user to leave the tty by pressing Ctrl-c two times in a two seconds time frame
+func detach() {
+	fmt.Fprintf(os.Stdout, "Send two times Ctrl-c (SIGINT) in order to leave doenter")
+	sigchan := make(chan os.Signal, 1)
+	signal.Notify(sigchan)
+
+	frec := false
+	for _ = range sigchan {
+		if frec {
+			os.Exit(0)
+		}
+
+		timer := time.NewTimer(time.Second * 2)
+		frec = true
+
+		go func() {
+			<-timer.C
+			frec = false
+		}()
 	}
 }
 
@@ -60,5 +85,6 @@ func main() {
 
 	go read(s)
 	go write(s)
-	sigh(s)
+	go sigh(s)
+	detach()
 }
