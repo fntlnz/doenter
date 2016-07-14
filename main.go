@@ -52,7 +52,7 @@ func detach() {
 	signal.Notify(sigchan)
 
 	frec := false
-	for _ = range sigchan {
+	for range sigchan {
 		if frec {
 			os.Exit(0)
 		}
