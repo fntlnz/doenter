@@ -10,17 +10,17 @@ import (
 	"syscall"
 	"time"
 
-	"github.com/goburrow/serial"
 	"github.com/mitchellh/go-homedir"
+	"github.com/tarm/serial"
 )
 
-func read(s serial.Port) {
+func read(s *serial.Port) {
 	for {
 		io.Copy(os.Stdout, s)
 	}
 }
 
-func write(s serial.Port) {
+func write(s *serial.Port) {
 	for {
 		reader := bufio.NewReader(os.Stdin)
 		text, _ := reader.ReadString('\n')
@@ -29,7 +29,7 @@ func write(s serial.Port) {
 }
 
 // This functions handles signals to the main process and routes them to the VM
-func sigh(s serial.Port) {
+func sigh(s *serial.Port) {
 	sigchan := make(chan os.Signal, 1)
 	signal.Notify(sigchan)
 
@@ -74,10 +74,11 @@ func main() {
 	}
 
 	c := &serial.Config{
-		Address:  addr,
-		BaudRate: 9600,
+		Name: addr,
+		Baud: 9600,
 	}
-	s, err := serial.Open(c)
+
+	s, err := serial.OpenPort(c)
 	if err != nil {
 		log.Fatal(err)
 	}

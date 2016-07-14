@@ -2,18 +2,18 @@
 	"version": 0,
 	"dependencies": [
 		{
-			"importpath": "github.com/goburrow/serial",
-			"repository": "https://github.com/goburrow/serial",
-			"vcs": "git",
-			"revision": "1b57be761cd3a66492333e9367a23c0869f9cc2e",
-			"branch": "master",
-			"notests": true
-		},
-		{
 			"importpath": "github.com/mitchellh/go-homedir",
 			"repository": "https://github.com/mitchellh/go-homedir",
 			"vcs": "git",
 			"revision": "756f7b183b7ab78acdbbee5c7f392838ed459dda",
+			"branch": "master",
+			"notests": true
+		},
+		{
+			"importpath": "github.com/tarm/serial",
+			"repository": "https://github.com/tarm/serial",
+			"vcs": "git",
+			"revision": "37be519d49878d0098e34fb614136b81e6c87861",
 			"branch": "master",
 			"notests": true
 		}
