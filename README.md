@@ -1,6 +1,6 @@
 # doenter (Docker Enter)
 
-**doenter** is an utility that allows you to **obtain a shell** inside the [Docker for Mac Beta](https://blog.docker.com/2016/03/docker-for-mac-windows-beta/) **xhyve** virtual machine.
+**doenter** is an utility that allows you to **obtain a shell** inside the [Docker for Mac](https://docs.docker.com/engine/installation/mac/#/docker-for-mac) **xhyve** virtual machine.
 
 A shell inside that Virtual Machine is useful because:
 
@@ -9,6 +9,19 @@ A shell inside that Virtual Machine is useful because:
 - Personalize networks
 - Ideas to come
 
+
+## Disclaimer
+
+There are chances that for what you are trying to do **you don't need doenter at all!**
+
+Yes, I know that I can access to the virtual machine resources by collapsing into the host namespace using a privileged container.
+Doenter is intended to be used in those situations where you don't have the docker daemon running (e.g you are restarting it or substituting it with a brand new one)
+
+So, if you just need to enter into the VM and poke around just do something like this:
+
+```bash
+docker run -it --pid=host --privileged debian:jessie nsenter -t 1 -m -p -n
+```
 
 # Installation
 
